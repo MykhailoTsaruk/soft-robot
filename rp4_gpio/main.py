@@ -18,7 +18,7 @@ def task_even():
     global RESULT
     while True:
         for i in range(0, PIN_COUNT, 2):
-            RESULT[i] = read(hx711[i])
+            RESULT[i] = str(read(hx711[i]))
         even_done.set()
         delayMicros(1)
         even_done.clear()
@@ -27,7 +27,7 @@ def task_odd():
     global RESULT
     while True:
         for i in range(1, PIN_COUNT, 2):
-            RESULT[i] = read(hx711[i])
+            RESULT[i] = str(read(hx711[i]))
         odd_done.set()
         delayMicros(1)
         odd_done.clear()
@@ -46,17 +46,17 @@ if __name__ == "__main__":
 
     even_thread = threading.Thread(target=task_even)
     odd_thread  = threading.Thread(target=task_odd)
-
+    
     fifo_path = "./fifo_file"
     if not os.path.exists(fifo_path):
         os.mkfifo(fifo_path)
 
     with open(fifo_path, 'w') as fifo:
         while True:
-            even_thread.wait()
-            odd_thread.wait()
+            even_done.wait()
+            odd_done.wait()
 
             fifo.write(result_to_string())
-            fifo.flush
+            fifo.flush()
             delayMicros(10)
 
