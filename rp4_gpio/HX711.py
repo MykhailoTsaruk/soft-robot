@@ -13,11 +13,22 @@ class HX711():
         self.RESULT = 0
         self.DESCRIPTION = ''
 
-    def set_RESULT(self, new_RESULT):
+    def set_result(self, new_RESULT):
         self.RESULT = new_RESULT
 
     def set_gain(self, new_GAIN):
-        self.GAIN = new_GAIN
+        '''
+        :param new_GAIN: new GAIN 128 / 64 / 32
+        '''
+        match new_GAIN:
+            case 128:
+                self.GAIN = 1
+            case 64:
+                self.GAIN = 2
+            case 32:
+                self.GAIN = 3
+            case _:
+                raise ValueError("new_GAIN must be 128 / 64 / 32")
 
 
 def is_ready(hx711: HX711) -> bool:
@@ -67,6 +78,8 @@ def read(hx711: HX711) -> int:
           | data[1] << 8    \
           | data[0]
     
+    hx711.set_result(value)
+
     return value
 
 
