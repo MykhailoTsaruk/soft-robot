@@ -30,7 +30,7 @@ def digitalWrite(PIN, SIGNAL):
     elif SIGNAL == HIGH:
         return GPIO.output(PIN, HIGH)
     else:
-        raise "SIGNAL must be LOW or HIGH!"
+        raise ValueError("SIGNAL must be LOW or HIGH!")
     
 def digitalRead(PIN):
     '''
@@ -48,4 +48,4 @@ def pinMode(PIN, TYPE):
     elif TYPE == OUTPUT:
         GPIO.setup(PIN, OUTPUT)
     else:
-        raise "TYPE must be INPUT or OUTPUT"
+        raise ValueError("TYPE must be INPUT or OUTPUT")
