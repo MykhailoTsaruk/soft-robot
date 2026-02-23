@@ -1,5 +1,9 @@
-import RPI.GPIO as GPIO
+import RPi.GPIO as GPIO
 import time as Time
+
+GPIO.setmode(GPIO.BCM)
+
+GPIO.setwarnings(False)
 
 LOW = GPIO.LOW
 HIGH = GPIO.HIGH
